@@ -1,0 +1,41 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.6.5'
+}
+
+group 'com.star.easygenerate'
+version '1.0'
+
+repositories {
+    mavenCentral()
+//    maven {
+//        url "http://repo1.maven.org/maven2"
+//    }
+
+}
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+intellij {
+//    plugins 'java'
+    version '2018.1'
+    pluginName 'Easy Generate'
+    updateSinceUntilBuild false
+}
+
+patchPluginXml {
+    changeNotes """
+      <h3>v1.0 first version</h3>
+      <ul>
+          <li>support generate constant for field</li>
+      </ul>
+    """
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}

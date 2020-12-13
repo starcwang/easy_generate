@@ -1,1 +1,2 @@
 # generate_something
+快速生成变量的常量代码

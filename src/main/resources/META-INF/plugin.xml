@@ -1,0 +1,32 @@
+<idea-plugin>
+    <id>com.star.easy_generate</id>
+    <name>Easy Generate</name>
+    <vendor email="wangchao.star@gmail.com" url="https://github.com/starcwang">wangchao</vendor>
+
+    <description><![CDATA[
+      This plugin can help you to generate java code quickly.<br>
+      <a href="https://github.com/starcwang/easy_generate">easy_generate source code and document</a><br>
+      <h3>v1.0 first version</h3>
+      <ul>
+          <li>support generate constant for field</li>
+      </ul>
+    ]]></description>
+
+    <idea-version since-build="181"/>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="generate.generatorConsts" class="com.star.easygenerate.action.GenerateFieldConstAction" text="Field Name Constants">
+            <add-to-group group-id="JavaGenerateGroup1" anchor="before" relative-to-action="GenerateEquals"/>
+        </action>
+    </actions>
+</idea-plugin>
