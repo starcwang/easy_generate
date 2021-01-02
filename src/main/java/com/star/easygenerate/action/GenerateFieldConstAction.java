@@ -126,7 +126,7 @@ public class GenerateFieldConstAction extends AnAction {
 
         MemberChooser<ClassMemberWithElement> chooser = new MemberChooser<>(members, true, true, project);
         chooser.setTitle("请选择生成常量的字段");
-        chooser.setCopyJavadocVisible(true);
+        chooser.setCopyJavadocVisible(false);
         if (chooser.showAndGet()) {
             return chooser.getSelectedElements();
         }
