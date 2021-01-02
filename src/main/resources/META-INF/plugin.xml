@@ -4,7 +4,9 @@
     <vendor email="wangchao.star@gmail.com" url="https://github.com/starcwang">wangchao</vendor>
 
     <description><![CDATA[
-      This plugin can help you to generate java code quickly.<br>
+      This plugin can help you to generate java code quickly. <br>
+      1. add "Field Name Constants" button in Generate window, which can generate field constants quickly.<br>
+
       <a href="https://github.com/starcwang/easy_generate">easy_generate source code and document</a><br>
       <h3>v1.0 first version</h3>
       <ul>

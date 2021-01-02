@@ -28,7 +28,6 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiJavaToken;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
-import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.star.easygenerate.util.WordUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -71,20 +70,19 @@ public class GenerateFieldConstAction extends AnAction {
                     return true;
                 }
                 PsiModifierList modifierList = f.getModifierList();
-                if (modifierList != null && modifierList.hasModifierProperty(PsiModifier.STATIC)) {
-                    return true;
-                }
-                return false;
+                return modifierList != null && modifierList.hasModifierProperty(PsiModifier.STATIC);
             });
             allPsiFields.addAll(fieldList);
         }
 
+        // 手动选取类
         List<ClassMemberWithElement> selectedFields = getSelectedFields(project, allPsiFields);
 
         if (selectedFields == null || selectedFields.isEmpty()) {
             return;
         }
 
+        // 生成属性
         Map<PsiClass, List<PsiElement>> writeMap = Maps.newHashMap();
         for (ClassMemberWithElement selectedField : selectedFields) {
             PsiField psiField = (PsiField)selectedField.getElement();
@@ -92,16 +90,16 @@ public class GenerateFieldConstAction extends AnAction {
             if (psiClass == null) {
                 continue;
             }
-            // 生成属性
             String fieldText = MessageFormat.format("/** the constant of field '{'@link {0}#{1}'}' */\n"
                     + " public static final String {2} = \"{1}\";\n",
                 psiClass.getName(), psiField.getName(), getConstName(psiField.getName()));
             PsiField constField = factory.createFieldFromText(fieldText, null);
             writeMap.computeIfAbsent(psiClass, psiClass1 -> Lists.newArrayList()).add(constField);
         }
+
+        // 写入
         writeMap.forEach((k, v) -> write(project, k, v));
     }
-
 
     /**
      * 生成常量名
@@ -158,22 +156,9 @@ public class GenerateFieldConstAction extends AnAction {
                     return;
                 }
 
-                PsiElement first = null;
                 for (PsiElement constElement : constElements) {
-                    PsiElement target = classElement.addBefore(constElement, lastRbrace);
-                    if (first == null) {
-                        first = target;
-                    }
+                    classElement.addBefore(constElement, lastRbrace);
                 }
-                //if (first == null) {
-                //    return;
-                //}
-                //
-                //// 格式化文档注释
-                //CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(project);
-                //int startOffset = first.getTextOffset();
-                //int endOffset = lastRbrace.getTextOffset() + lastRbrace.getText().length();
-                //codeStyleManager.reformatText(classElement.getContainingFile(), startOffset, endOffset + 1);
             });
     }
 
