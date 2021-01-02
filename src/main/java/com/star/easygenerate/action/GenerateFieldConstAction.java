@@ -1,11 +1,17 @@
 package com.star.easygenerate.action;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.intellij.codeInsight.generation.ClassMemberWithElement;
+import com.intellij.codeInsight.generation.PsiFieldMember;
+import com.intellij.ide.util.MemberChooser;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -51,38 +57,82 @@ public class GenerateFieldConstAction extends AnAction {
         }
         PsiJavaFile psiJavaFile = (PsiJavaFile)psiFile;
 
-        // 遍历所有类
-        List<PsiClass> classElements = getFromChildren(psiJavaFile, PsiClass.class);
+        // 找到所有类
+        List<PsiClass> classElements = getAllClass(psiJavaFile);
+
+        List<PsiField> allPsiFields = Lists.newArrayList();
         for (PsiClass classElement : classElements) {
-
-            // 寻找类中的属性
-            List<PsiField> fieldElements = getFromChildren(classElement, PsiField.class);
-            Set<String> existsFieldNames = fieldElements.stream().map(NavigationItem::getName).collect(Collectors.toSet());
-
-            List<PsiElement> constElements = Lists.newArrayList();
-            for (PsiField fieldElement : fieldElements) {
-                String name = fieldElement.getName();
-                String constFieldName = "CONST_" + WordUtils.toUpperCase(name);
-                // 跳过已存在的
+            List<PsiField> fieldList = getFromChildren(classElement, PsiField.class);
+            Set<String> existsFieldNames = fieldList.stream().map(NavigationItem::getName).collect(Collectors.toSet());
+            fieldList.removeIf(f -> {
+                String name = f.getName();
+                String constFieldName = getConstName(name);
                 if (existsFieldNames.contains(constFieldName)) {
-                    continue;
+                    return true;
                 }
-
-                // 跳过static修饰的
-                PsiModifierList modifierList = fieldElement.getModifierList();
+                PsiModifierList modifierList = f.getModifierList();
                 if (modifierList != null && modifierList.hasModifierProperty(PsiModifier.STATIC)) {
-                    continue;
+                    return true;
                 }
-
-                // 生成属性
-                String fieldText = String.format("/** the constant of field {@link %s#%s} */\n public static final String %s = \"%s\";\n",
-                    classElement.getName(), name, constFieldName, name);
-                PsiField constField = factory.createFieldFromText(fieldText, null);
-                constElements.add(constField);
-            }
-
-            write(project, classElement, constElements);
+                return false;
+            });
+            allPsiFields.addAll(fieldList);
         }
+
+        List<ClassMemberWithElement> selectedFields = getSelectedFields(project, allPsiFields);
+
+        if (selectedFields == null || selectedFields.isEmpty()) {
+            return;
+        }
+
+        Map<PsiClass, List<PsiElement>> writeMap = Maps.newHashMap();
+        for (ClassMemberWithElement selectedField : selectedFields) {
+            PsiField psiField = (PsiField)selectedField.getElement();
+            PsiClass psiClass = (PsiClass)psiField.getContext();
+            if (psiClass == null) {
+                continue;
+            }
+            // 生成属性
+            String fieldText = MessageFormat.format("/** the constant of field '{'@link {0}#{1}'}' */\n"
+                    + " public static final String {2} = \"{1}\";\n",
+                psiClass.getName(), psiField.getName(), getConstName(psiField.getName()));
+            PsiField constField = factory.createFieldFromText(fieldText, null);
+            writeMap.computeIfAbsent(psiClass, psiClass1 -> Lists.newArrayList()).add(constField);
+        }
+        writeMap.forEach((k, v) -> write(project, k, v));
+    }
+
+
+    /**
+     * 生成常量名
+     *
+     * @param name 名字
+     * @return {@link String}
+     */
+    private String getConstName(String name) {
+        return "CONST_" + WordUtils.toUpperCase(name);
+    }
+
+    /**
+     * 获取选中字段
+     *
+     * @param project 项目
+     * @param allFields 所有字段
+     * @return {@link List<ClassMemberWithElement>}
+     */
+    private List<ClassMemberWithElement> getSelectedFields(Project project, List<PsiField> allFields) {
+        ClassMemberWithElement[] members = new ClassMemberWithElement[allFields.size()];
+        for (int i = 0, allFieldsSize = allFields.size(); i < allFieldsSize; i++) {
+            members[i] = new PsiFieldMember(allFields.get(i));
+        }
+
+        MemberChooser<ClassMemberWithElement> chooser = new MemberChooser<>(members, true, true, project);
+        chooser.setTitle("请选择生成常量的字段");
+        chooser.setCopyJavadocVisible(true);
+        if (chooser.showAndGet()) {
+            return chooser.getSelectedElements();
+        }
+        return Lists.newArrayList();
     }
 
     /**
@@ -115,16 +165,35 @@ public class GenerateFieldConstAction extends AnAction {
                         first = target;
                     }
                 }
-                if (first == null) {
-                    return;
-                }
-
-                // 格式化文档注释
-                CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(project);
-                int startOffset = first.getTextOffset();
-                int endOffset = lastRbrace.getTextOffset() + lastRbrace.getText().length();
-                codeStyleManager.reformatText(classElement.getContainingFile(), startOffset, endOffset + 1);
+                //if (first == null) {
+                //    return;
+                //}
+                //
+                //// 格式化文档注释
+                //CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(project);
+                //int startOffset = first.getTextOffset();
+                //int endOffset = lastRbrace.getTextOffset() + lastRbrace.getText().length();
+                //codeStyleManager.reformatText(classElement.getContainingFile(), startOffset, endOffset + 1);
             });
+    }
+
+    /**
+     * 得到所有PsiClass
+     *
+     * @param psiElement psi元素
+     * @return {@link List<PsiClass>}
+     */
+    private List<PsiClass> getAllClass(PsiElement psiElement) {
+        List<PsiClass> res = Lists.newArrayList();
+        List<PsiClass> list = Arrays.stream(psiElement.getChildren())
+            .filter(PsiClass.class::isInstance)
+            .map(e -> (PsiClass)e)
+            .collect(Collectors.toList());
+        res.addAll(list);
+        for (PsiClass psiClass : list) {
+            res.addAll(getAllClass(psiClass));
+        }
+        return res;
     }
 
     @SuppressWarnings("unchecked")
@@ -133,5 +202,10 @@ public class GenerateFieldConstAction extends AnAction {
             .filter(targetElementClass::isInstance)
             .map(psiElement1 -> (T)psiElement1)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean startInTransaction() {
+        return true;
     }
 }
