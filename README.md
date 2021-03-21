@@ -7,6 +7,8 @@
 ## Gif图
 ![说明](./doc/1.gif)
 
+## 安装
+IDEA插件市场搜索 `Easy Generate` 即可
 
 ## 使用方法
 - 使用快捷键调出代码生成Generate（同生成Getter、Setter的快捷键），或者 右键->Generate...，选择"Field Name Constants"。生成变量的常量。
