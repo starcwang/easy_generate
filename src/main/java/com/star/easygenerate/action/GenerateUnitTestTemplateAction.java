@@ -25,6 +25,7 @@ import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiPackage;
@@ -44,16 +45,25 @@ public class GenerateUnitTestTemplateAction extends AnAction {
     public void actionPerformed(AnActionEvent e) {
 
         Project project = e.getData(CommonDataKeys.PROJECT);
-        PsiElement psiElement = e.getData(CommonDataKeys.PSI_ELEMENT);
-        PsiJavaFile psiJavaFile = (PsiJavaFile)e.getData(CommonDataKeys.PSI_FILE);
+        if (project == null) {
+            return;
+        }
+        PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
+        if (psiFile == null) {
+            return;
+        }
+        PsiJavaFile psiJavaFile = (PsiJavaFile)psiFile;
         PsiDirectory srcDir = psiJavaFile.getContainingDirectory();
         PsiPackage srcPackage = JavaDirectoryService.getInstance().getPackage(srcDir);
-        final Module srcModule = ModuleUtilCore.findModuleForPsiElement(psiElement);
+        final Module srcModule = ModuleUtilCore.findModuleForPsiElement(psiJavaFile);
 
         CreateUnitTestDialog dialog = new CreateUnitTestDialog(project, "xxxxxxx", psiJavaFile.getClasses()[0], srcPackage, srcModule);
         if (!dialog.showAndGet()) {
             return;
         }
+        PsiDirectory tgtDir = dialog.getTargetDirectory();
+
+        psiJavaFile.getClasses();
 
         Map<String, Object> params = Maps.newHashMap();
         params.put("user", "cc");
@@ -66,7 +76,7 @@ public class GenerateUnitTestTemplateAction extends AnAction {
             CustomFileTemplate template = new CustomFileTemplate("java", "java");
             template.setText(text);
 
-            FileTemplateUtil.createFromTemplate(template, dialog.getClassName(), params, srcDir, null);
+            FileTemplateUtil.createFromTemplate(template, dialog.getClassName(), params, tgtDir, null);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
