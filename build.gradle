@@ -22,7 +22,7 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
 //    plugins 'java'
-    version '2018.1'
+    version '2019.1'
     pluginName 'Easy Generate'
     updateSinceUntilBuild false
 }

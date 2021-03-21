@@ -15,7 +15,7 @@
       </ul>
     ]]></description>
 
-    <idea-version since-build="181"/>
+    <idea-version since-build="191.1384"/>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
@@ -24,12 +24,21 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <applicationService serviceImplementation="com.star.easygenerate.service.VelocityService"/>
+
     </extensions>
 
     <actions>
         <!-- Add your actions here -->
-        <action id="generate.generatorConsts" class="com.star.easygenerate.action.GenerateFieldConstAction" text="Field Name Constants">
+        <action id="generate.generatorConsts" class="com.star.easygenerate.action.GenerateFieldConstAction"
+                text="Field Name Constants">
+            <add-to-group group-id="JavaGenerateGroup1" anchor="before" relative-to-action="GenerateEquals"/>
+        </action>
+        <!-- Add your actions here -->
+        <action id="generate.generatorUnitTest" class="com.star.easygenerate.action.GenerateUnitTestTemplateAction"
+                text="Generate Unit Test Template">
             <add-to-group group-id="JavaGenerateGroup1" anchor="before" relative-to-action="GenerateEquals"/>
         </action>
     </actions>
+
 </idea-plugin>
