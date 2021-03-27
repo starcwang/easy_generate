@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.star.easygenerate'
-version '1.01'
+version '1.10'
 
 repositories {
     mavenCentral()
@@ -29,6 +29,10 @@ intellij {
 
 patchPluginXml {
     changeNotes """
+      <h3>v1.10 create unit test</h3>
+      <ul>
+          <li>support generate constant for field</li>
+      </ul>
       <h3>v1.0 first version</h3>
       <ul>
           <li>support generate constant for field</li>

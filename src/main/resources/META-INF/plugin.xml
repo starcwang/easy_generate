@@ -6,9 +6,14 @@
     <description><![CDATA[
       This plugin can help you to generate java code quickly. <br>
       1. add "Field Name Constants" button in Generate window, which can generate field constants quickly.<br>
+      2. add "Generate Unit Test Template" button in Generate window, which can generate unit test quickly.<br>
 
       <a href="https://github.com/starcwang/easy_generate">easy_generate source code and document</a><br>
       <img src="https://raw.githubusercontent.com/starcwang/easy_generate/main/doc/1.gif" /><br>
+      <h3>v1.10 create unit test template</h3>
+      <ul>
+          <li>support generate unit test template</li>
+      </ul>
       <h3>v1.01 first version</h3>
       <ul>
           <li>support generate constant for field</li>
@@ -24,7 +29,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <applicationService serviceImplementation="com.star.easygenerate.service.VelocityService"/>
 
     </extensions>
 
