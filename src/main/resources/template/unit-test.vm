@@ -1,1 +1,51 @@
-$package
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+
+#foreach($field in $fieldList)
+import ${field.packageName};
+#end
+
+/**
+ * {@link ${package}.${className}}的单元测试类
+ *
+ * @author ${user}
+ * @date ${date}
+ */
+public class ${className}UnitTest {
+
+    @InjectMocks
+    private ${className} ${instanceName};
+
+    #foreach($field in $fieldList)
+    @Mock
+    private ${field.className} ${field.instanceName};
+    #end
+
+    #if ($hasBefore)
+    @Before
+    public void setUp() throws Exception {
+        // todo before test
+    }
+    #end
+
+
+    #foreach($method in ${methodList})
+
+    @Test
+    public void test${method.nameUp}() throws Exception {
+        // todo test
+    }
+    #end
+
+    #if ($hasAfter)
+    @After
+    public void tearDown() throws Exception {
+        // todo after test
+    }
+    #end
+
+}

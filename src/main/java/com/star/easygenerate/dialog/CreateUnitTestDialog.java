@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,9 +27,9 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CustomShortcutSet;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
-import com.intellij.openapi.help.HelpManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtilCore;
@@ -80,6 +81,8 @@ import org.jetbrains.jps.model.java.JavaSourceRootType;
  * @date 2021/03/20
  */
 public class CreateUnitTestDialog extends DialogWrapper {
+    private static final Logger LOGGER = Logger.getInstance(CreateUnitTestDialog.class);
+
     private static final String RECENTS_KEY = "CreateTestDialog.RecentsKey";
     private static final String SHOW_INHERITED_MEMBERS_PROPERTY = CreateUnitTestDialog.class.getName() + ".includeInheritedMembers";
 
@@ -117,7 +120,7 @@ public class CreateUnitTestDialog extends DialogWrapper {
     protected String suggestTestClassName(PsiClass targetClass) {
         JavaCodeStyleSettings customSettings = JavaCodeStyleSettings.getInstance(targetClass.getContainingFile());
         String prefix = customSettings.TEST_NAME_PREFIX;
-        String suffix = customSettings.TEST_NAME_SUFFIX;
+        String suffix = "UnitTest";
         return prefix + targetClass.getName() + suffix;
     }
 
@@ -450,7 +453,14 @@ public class CreateUnitTestDialog extends DialogWrapper {
 
     @Override
     protected void doHelpAction() {
-        HelpManager.getInstance().invokeHelp("reference.dialogs.createTest");
+        Desktop dp = Desktop.getDesktop();
+        if (dp.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                dp.browse(URI.create("https://github.com/starcwang/easy_generate"));
+            } catch (IOException e) {
+                LOGGER.error("open url error: https://github.com/starcwang/easy_generate");
+            }
+        }
     }
 
     private static List<VirtualFile> computeTestRoots(@NotNull Module mainModule) {
