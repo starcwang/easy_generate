@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
+import com.intellij.codeInsight.navigation.NavigationUtil;
 import com.intellij.ide.fileTemplates.FileTemplateUtil;
 import com.intellij.ide.fileTemplates.impl.CustomFileTemplate;
 import com.intellij.openapi.actionSystem.AnAction;
@@ -21,6 +22,8 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaDirectoryService;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
@@ -28,6 +31,8 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiPackage;
+import com.intellij.psi.impl.source.PsiJavaFileImpl;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.refactoring.util.classMembers.MemberInfo;
 import com.intellij.util.ResourceUtil;
 import com.star.easygenerate.dialog.CreateUnitTestDialog;
@@ -83,6 +88,14 @@ public class GenerateUnitTestTemplateAction extends AnAction {
         } catch (Exception exception) {
             LOGGER.error("create template error:", exception);
         }
+
+        // 跳转到类上
+        String tgtClassName = ((PsiJavaFileImpl)dialog.getTargetClass().getParent()).getPackageName() + "." + dialog.getClassName();
+        PsiClass testClass = JavaPsiFacade.getInstance(project).findClass(tgtClassName, GlobalSearchScope.allScope(project));
+        if (testClass == null) {
+            return;
+        }
+        NavigationUtil.activateFileWithPsiElement(testClass, true);
     }
 
     /**
@@ -162,7 +175,7 @@ public class GenerateUnitTestTemplateAction extends AnAction {
         params.put("user", System.getProperty("user.name"));
         params.put("date", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
         params.put("className", className);
-        params.put("package", dialog.getTargetDirectory().getName());
+        params.put("package", ((PsiJavaFileImpl)dialog.getTargetClass().getParent()).getPackageName());
         params.put("instanceName", StringUtils.substring(className, 0, 1).toLowerCase() + StringUtils.substring(className, 1));
         params.put("testClassName", dialog.getClassName());
         params.put("fieldList", fields);
