@@ -20,7 +20,6 @@ import java.util.stream.Stream;
 import javax.swing.*;
 
 import com.intellij.CommonBundle;
-import com.intellij.codeInsight.CodeInsightBundle;
 import com.intellij.ide.util.PropertiesComponent;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -95,10 +94,9 @@ public class CreateUnitTestDialog extends DialogWrapper {
 
     private EditorTextField myTargetClassNameField;
     private ReferenceEditorComboWithBrowseButton myTargetPackageField;
-    private final JCheckBox myGenerateBeforeBox = new JCheckBox(CodeInsightBundle.message("intention.create.test.dialog.setUp"));
-    private final JCheckBox myGenerateAfterBox = new JCheckBox(CodeInsightBundle.message("intention.create.test.dialog.tearDown"));
-    private final JCheckBox myShowInheritedMethodsBox = new JCheckBox(
-        CodeInsightBundle.message("intention.create.test.dialog.show.inherited"));
+    private final JCheckBox myGenerateBeforeBox = new JCheckBox("setUp/@Before");
+    private final JCheckBox myGenerateAfterBox = new JCheckBox("tearDown/@After");
+    private final JCheckBox myShowInheritedMethodsBox = new JCheckBox("Show inherited methods");
     private final MemberSelectionTable myMethodsTable = new MemberSelectionTable(Collections.emptyList(), null);
 
     public CreateUnitTestDialog(@NotNull Project project,
@@ -213,7 +211,7 @@ public class CreateUnitTestDialog extends DialogWrapper {
         constr.gridx = 0;
         constr.weightx = 0;
         constr.gridwidth = 1;
-        panel.add(new JLabel(CodeInsightBundle.message("intention.create.test.dialog.class.name")), constr);
+        panel.add(new JLabel("Class name:"), constr);
 
         myTargetClassNameField = new EditorTextField(suggestTestClassName(myTargetClass));
         myTargetClassNameField.getDocument().addDocumentListener(new DocumentListener() {
@@ -231,14 +229,14 @@ public class CreateUnitTestDialog extends DialogWrapper {
         constr.gridy = gridy++;
         constr.gridx = 0;
         constr.weightx = 0;
-        panel.add(new JLabel(CodeInsightBundle.message("dialog.create.class.destination.package.label")), constr);
+        panel.add(new JLabel("Destination package:"), constr);
 
         constr.gridx = 1;
         constr.weightx = 1;
 
         String targetPackageName = myTargetPackage != null ? myTargetPackage.getQualifiedName() : "";
         myTargetPackageField = new PackageNameReferenceEditorCombo(targetPackageName, myProject, RECENTS_KEY,
-            CodeInsightBundle.message("dialog.create.class.package.chooser.title"));
+            "Choose Destination Package");
 
         new AnAction() {
             @Override
@@ -255,7 +253,7 @@ public class CreateUnitTestDialog extends DialogWrapper {
         constr.gridy = gridy++;
         constr.gridx = 0;
         constr.weightx = 0;
-        panel.add(new JLabel(CodeInsightBundle.message("intention.create.test.dialog.generate")), constr);
+        panel.add(new JLabel("Generate:"), constr);
 
         constr.gridx = 1;
         constr.weightx = 1;
@@ -269,7 +267,7 @@ public class CreateUnitTestDialog extends DialogWrapper {
         constr.gridy = gridy++;
         constr.gridx = 0;
         constr.weightx = 0;
-        final JLabel membersLabel = new JLabel(CodeInsightBundle.message("intention.create.test.dialog.select.methods"));
+        final JLabel membersLabel = new JLabel("Generate test methods for:");
         membersLabel.setLabelFor(myMethodsTable);
         panel.add(membersLabel, constr);
 
@@ -405,7 +403,7 @@ public class CreateUnitTestDialog extends DialogWrapper {
         }
 
         return WriteCommandAction.writeCommandAction(myProject)
-            .withName(CodeInsightBundle.message("create.directory.command"))
+            .withName("Create directory")
             .compute(() -> RefactoringUtil.createPackageDirectoryInSourceRoot(targetPackage, selectedRoot));
     }
 

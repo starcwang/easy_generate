@@ -2,8 +2,10 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 #foreach($field in $fieldList)
 import ${field.packageName};
@@ -15,6 +17,7 @@ import ${field.packageName};
  * @author ${user}
  * @date ${date}
  */
+@RunWith(PowerMockRunner.class)
 public class ${className}UnitTest {
 
     @InjectMocks
