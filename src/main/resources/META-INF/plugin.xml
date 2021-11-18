@@ -24,7 +24,7 @@
       </ul>
     ]]></description>
 
-    <idea-version since-build="191.1384"/>
+    <idea-version since-build="201.515"/>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
@@ -33,7 +33,12 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-
+        <intentionAction>
+            <className>com.star.easygenerate.action.GenerateAllSetter</className>
+        </intentionAction>
+        <intentionAction>
+            <className>com.star.easygenerate.action.GenerateAllSetterWithDefault</className>
+        </intentionAction>
     </extensions>
 
     <actions>
@@ -46,6 +51,15 @@
         <action id="generate.generatorUnitTest" class="com.star.easygenerate.action.GenerateUnitTestTemplateAction"
                 text="Generate Unit Test Template">
             <add-to-group group-id="JavaGenerateGroup1" anchor="before" relative-to-action="GenerateEquals"/>
+        </action>
+
+        <action id="generate.camelCase" class="com.star.easygenerate.action.CamelCaseAction"
+                text="Convert Camel Case">
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="ctrl shift meta U"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="ctrl shift meta U"/>
+            <keyboard-shortcut keymap="Default for XWin" first-keystroke="ctrl alt shift U"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta shift U"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift U"/>
         </action>
     </actions>
 
