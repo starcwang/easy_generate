@@ -10,6 +10,11 @@
 
       <a href="https://github.com/starcwang/easy_generate">easy_generate source code and document</a><br>
       <img src="https://raw.githubusercontent.com/starcwang/easy_generate/main/doc/1.gif" /><br>
+      <h3>v2.0.0 new feature</h3>
+      <ul>
+          <li>add setter generator</li>
+          <li>add camel case converter</li>
+      </ul>
       <h3>v1.2.1 fix bugs</h3>
       <ul>
           <li>fix some bugs</li>
@@ -30,6 +35,7 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
@@ -39,6 +45,8 @@
         <intentionAction>
             <className>com.star.easygenerate.action.GenerateAllSetterWithDefault</className>
         </intentionAction>
+
+        <applicationService serviceImplementation="com.star.easygenerate.service.setter.SetterService"/>
     </extensions>
 
     <actions>

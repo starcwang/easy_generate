@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.star.easygenerate'
-version '1.2.1'
+version '2.0.0'
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -23,8 +23,8 @@ dependencies {
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 // all versions https://data.services.jetbrains.com/products?fields=code,name,releases.downloads,releases.version,releases.build,releases.type&code=DG,PS,DL,MPS,MPSIIP,RDCPPP,WS,AC,IIC,IIE,GO,CL,PCD,PCC,RD,PCE,IIU,RM,PCP
 intellij {
-//    plugins 'java'
-    plugins = ['java', "com.intellij.properties", "com.intellij.java-i18n"]
+    // 如果需要支持lombok动态生成的getter和setter这里就需要加上lombok插件
+    plugins = ['java', "com.intellij.properties", 'Lombook Plugin:0.33-2020.1']
     version '2020.1'
     pluginName 'Easy Generate'
     downloadSources true
@@ -33,6 +33,11 @@ intellij {
 
 patchPluginXml {
     changeNotes """
+      <h3>v2.0.0 new feature</h3>
+      <ul>
+          <li>add setter generator</li>
+          <li>add camel case converter</li>
+      </ul>
       <h3>v1.2.1 fix bugs</h3>
       <ul>
           <li>fix some bugs</li>
