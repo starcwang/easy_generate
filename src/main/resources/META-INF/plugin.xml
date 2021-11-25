@@ -7,9 +7,22 @@
       This plugin can help you to generate java code quickly. <br>
       1. add "Field Name Constants" button in Generate window, which can generate field constants quickly.<br>
       2. add "Generate Unit Test Template" button in Generate window, which can generate unit test quickly.<br>
+      3. add all setter generator.<br>
+      4. add add camel case converter<br>
+      <br>
+      <br>
+      1. 快速生成变量的常量代码<br>
+      2. 快速生成单元测试代码<br>
+      3. 快速生成setter方法<br>
+      4，变量驼峰、大小写、下划线等转换<br>
 
       <a href="https://github.com/starcwang/easy_generate">easy_generate source code and document</a><br>
       <img src="https://raw.githubusercontent.com/starcwang/easy_generate/main/doc/1.gif" /><br>
+      <h3>v2.0.0 new feature</h3>
+      <ul>
+          <li>add setter generator</li>
+          <li>add camel case converter</li>
+      </ul>
       <h3>v1.2.1 fix bugs</h3>
       <ul>
           <li>fix some bugs</li>
@@ -30,6 +43,7 @@
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
@@ -39,6 +53,8 @@
         <intentionAction>
             <className>com.star.easygenerate.action.GenerateAllSetterWithDefault</className>
         </intentionAction>
+
+        <applicationService serviceImplementation="com.star.easygenerate.service.setter.SetterService"/>
     </extensions>
 
     <actions>
@@ -55,11 +71,11 @@
 
         <action id="generate.camelCase" class="com.star.easygenerate.action.CamelCaseAction"
                 text="Convert Camel Case">
-            <keyboard-shortcut keymap="Mac OS X" first-keystroke="ctrl shift meta U"/>
-            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="ctrl shift meta U"/>
-            <keyboard-shortcut keymap="Default for XWin" first-keystroke="ctrl alt shift U"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta shift U"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift U"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="alt shift U"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="alt shift U"/>
+            <keyboard-shortcut keymap="Default for XWin" first-keystroke="alt shift U"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift U"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift U"/>
         </action>
     </actions>
 
