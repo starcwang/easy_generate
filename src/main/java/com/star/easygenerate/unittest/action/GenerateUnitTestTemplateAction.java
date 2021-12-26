@@ -1,4 +1,4 @@
-package com.star.easygenerate.action;
+package com.star.easygenerate.unittest.action;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -35,9 +35,9 @@ import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.refactoring.util.classMembers.MemberInfo;
 import com.intellij.util.ResourceUtil;
-import com.star.easygenerate.dialog.CreateUnitTestDialog;
-import com.star.easygenerate.model.TemplateField;
-import com.star.easygenerate.model.TemplateMethod;
+import com.star.easygenerate.unittest.dialog.CreateUnitTestDialog;
+import com.star.easygenerate.unittest.model.TemplateField;
+import com.star.easygenerate.unittest.model.TemplateMethod;
 import org.apache.commons.compress.utils.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nullable;

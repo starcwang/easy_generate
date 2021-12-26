@@ -1,9 +1,8 @@
-package com.star.easygenerate.service.setter;
+package com.star.easygenerate.setter.service;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableMap;
@@ -14,7 +13,8 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiParameter;
 import com.intellij.psi.util.PsiTypesUtil;
-import com.star.easygenerate.service.setter.SetterBO.SetterMethodBO;
+import com.star.easygenerate.setter.model.SetterBO;
+import com.star.easygenerate.setter.model.SetterBO.SetterMethodBO;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;

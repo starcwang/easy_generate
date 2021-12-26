@@ -1,4 +1,4 @@
-package com.star.easygenerate.dialog;
+package com.star.easygenerate.unittest.dialog;
 
 import java.awt.*;
 import java.awt.event.InputEvent;

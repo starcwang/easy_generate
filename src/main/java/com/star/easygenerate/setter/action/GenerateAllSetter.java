@@ -1,4 +1,4 @@
-package com.star.easygenerate.action;
+package com.star.easygenerate.setter.action;
 
 /**
  * @author wangchao

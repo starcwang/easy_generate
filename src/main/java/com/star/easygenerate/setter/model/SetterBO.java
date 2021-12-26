@@ -1,4 +1,4 @@
-package com.star.easygenerate.service.setter;
+package com.star.easygenerate.setter.model;
 
 import java.util.List;
 import java.util.Objects;

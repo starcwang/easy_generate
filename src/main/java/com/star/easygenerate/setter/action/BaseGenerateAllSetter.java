@@ -1,4 +1,4 @@
-package com.star.easygenerate.action;
+package com.star.easygenerate.setter.action;
 
 import com.intellij.codeInsight.intention.PsiElementBaseIntentionAction;
 import com.intellij.openapi.components.ServiceManager;
@@ -17,8 +17,8 @@ import com.intellij.psi.PsiLocalVariable;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.util.PsiUtilBase;
 import com.intellij.util.IncorrectOperationException;
-import com.star.easygenerate.service.setter.SetterBO;
-import com.star.easygenerate.service.setter.SetterService;
+import com.star.easygenerate.setter.model.SetterBO;
+import com.star.easygenerate.setter.service.SetterService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Nls;

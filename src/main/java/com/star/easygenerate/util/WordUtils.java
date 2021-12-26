@@ -10,6 +10,12 @@ public final class WordUtils {
 
     private WordUtils() {}
 
+    /**
+     * 驼峰表示法变成下划线大写表示法
+     *
+     * @param camelCase 驼峰式
+     * @return {@link String}
+     */
     public static String toUpperCase(String camelCase) {
         if (StringUtils.isBlank(camelCase)) {
             return camelCase;

@@ -1,4 +1,4 @@
-package com.star.easygenerate.action;
+package com.star.easygenerate.camelcase.action;
 
 import java.util.List;
 import java.util.Objects;

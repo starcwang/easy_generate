@@ -1,4 +1,4 @@
-package com.star.easygenerate.action;
+package com.star.easygenerate.fieldconst.action;
 
 import java.text.MessageFormat;
 import java.util.Arrays;

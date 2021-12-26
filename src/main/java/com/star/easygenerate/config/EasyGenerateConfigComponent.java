@@ -1,7 +1,5 @@
 package com.star.easygenerate.config;
 
-import java.util.Objects;
-
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;

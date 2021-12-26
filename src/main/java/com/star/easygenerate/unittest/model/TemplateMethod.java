@@ -1,4 +1,4 @@
-package com.star.easygenerate.model;
+package com.star.easygenerate.unittest.model;
 
 /**
  * @author wangchao

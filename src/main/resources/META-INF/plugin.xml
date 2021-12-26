@@ -48,34 +48,43 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <intentionAction>
-            <className>com.star.easygenerate.action.GenerateAllSetter</className>
+            <className>com.star.easygenerate.setter.action.GenerateAllSetter</className>
         </intentionAction>
         <intentionAction>
-            <className>com.star.easygenerate.action.GenerateAllSetterWithDefault</className>
+            <className>com.star.easygenerate.setter.action.GenerateAllSetterWithDefault</className>
         </intentionAction>
 
-        <applicationService serviceImplementation="com.star.easygenerate.service.setter.SetterService"/>
+        <applicationService serviceImplementation="com.star.easygenerate.setter.service.SetterService"/>
     </extensions>
 
     <actions>
         <!-- Add your actions here -->
-        <action id="generate.generatorConsts" class="com.star.easygenerate.action.GenerateFieldConstAction"
+        <action id="generate.generatorConsts" class="com.star.easygenerate.fieldconst.action.GenerateFieldConstAction"
                 text="Field Name Constants">
             <add-to-group group-id="JavaGenerateGroup1" anchor="before" relative-to-action="GenerateEquals"/>
         </action>
         <!-- Add your actions here -->
-        <action id="generate.generatorUnitTest" class="com.star.easygenerate.action.GenerateUnitTestTemplateAction"
+        <action id="generate.generatorUnitTest" class="com.star.easygenerate.unittest.action.GenerateUnitTestTemplateAction"
                 text="Generate Unit Test Template">
             <add-to-group group-id="JavaGenerateGroup1" anchor="before" relative-to-action="GenerateEquals"/>
         </action>
 
-        <action id="generate.camelCase" class="com.star.easygenerate.action.CamelCaseAction"
+        <action id="generate.camelCase" class="com.star.easygenerate.camelcase.action.CamelCaseAction"
                 text="Convert Camel Case">
             <keyboard-shortcut keymap="Mac OS X" first-keystroke="alt shift U"/>
             <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="alt shift U"/>
             <keyboard-shortcut keymap="Default for XWin" first-keystroke="alt shift U"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt shift U"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt shift U"/>
+        </action>
+
+        <action id="generate.json2Java" class="com.star.easygenerate.javajson.action.Json2JavaAction"
+                text="Json Convert To Java Class">
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="alt shift J"/>
+            <keyboard-shortcut keymap="Mac OS X 10.5+" first-keystroke="alt shift J"/>
+            <keyboard-shortcut keymap="Default for XWin" first-keystroke="alt shift J"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift J"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift J"/>
         </action>
     </actions>
 
