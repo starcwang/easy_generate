@@ -6,9 +6,9 @@ import org.apache.commons.lang3.StringUtils;
  * @author wangchao
  * @date 2020/12/13
  */
-public final class WordUtils {
+public final class WordUtil {
 
-    private WordUtils() {}
+    private WordUtil() {}
 
     /**
      * 驼峰表示法变成下划线大写表示法

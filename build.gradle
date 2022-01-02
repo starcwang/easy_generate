@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.star.easygenerate'
-version '2.0.0'
+version '3.0.0'
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
@@ -32,25 +32,6 @@ intellij {
 }
 
 patchPluginXml {
-    changeNotes """
-      <h3>v2.0.0 new feature</h3>
-      <ul>
-          <li>add setter generator</li>
-          <li>add camel case converter</li>
-      </ul>
-      <h3>v1.2.1 fix bugs</h3>
-      <ul>
-          <li>fix some bugs</li>
-      </ul>
-      <h3>v1.10 create unit test</h3>
-      <ul>
-          <li>support generate constant for field</li>
-      </ul>
-      <h3>v1.0 first version</h3>
-      <ul>
-          <li>support generate constant for field</li>
-      </ul>
-    """
 }
 
 tasks.withType(JavaCompile) {

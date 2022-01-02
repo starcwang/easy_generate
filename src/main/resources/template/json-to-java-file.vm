@@ -1,0 +1,29 @@
+#foreach(${import} in ${data.importSet})
+${import}
+#end
+
+/**
+ * java bean from json
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+#if(${data.isArray})
+public class ${data.className} extend ArrayList<${data.arrayType}> {
+#else
+public class ${data.className} {
+#end
+
+    #foreach(${field} in ${data.fieldSet})
+    private ${field.type} ${field.name};
+    #end
+
+
+    #foreach(${innerBean} in ${data.innerBeanSet})
+    public static class ${innerBean.className} {
+        #foreach(${field} in ${innerBean.fieldSet})
+        private ${field.type} ${field.name};
+        #end
+    }
+    #end
+}

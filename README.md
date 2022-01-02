@@ -6,6 +6,7 @@
 - 快速生成单元测试代码
 - 快速生成setter方法
 - 变量驼峰、大小写、下划线等转换
+- java类和json相互转换 快捷键：alt shift J
 
 ## Gif图
 - 生成变量的常量代码
@@ -33,5 +34,8 @@ IDEA插件市场搜索 `Easy Generate` 即可
 - 驼峰转换: **光标放在变量上**，使用快捷键
   - win: alt + shift + u
   - mac: option + shift + u
+- java和json相互转换: 使用快捷键，可以将光标放在类名上或者json文件中
+  - win: alt + shift + j
+  - mac: alt + shift + j
 - 以上所有快捷键都可以在IDEA设置中修改
   - ![settings](./doc/settings.png)

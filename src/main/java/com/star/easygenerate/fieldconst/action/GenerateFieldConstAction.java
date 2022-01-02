@@ -28,7 +28,7 @@ import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiJavaToken;
 import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiModifierList;
-import com.star.easygenerate.util.WordUtils;
+import com.star.easygenerate.util.WordUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -108,7 +108,7 @@ public class GenerateFieldConstAction extends AnAction {
      * @return {@link String}
      */
     private String getConstName(String name) {
-        return "CONST_" + WordUtils.toUpperCase(name);
+        return "CONST_" + WordUtil.toUpperCase(name);
     }
 
     /**
