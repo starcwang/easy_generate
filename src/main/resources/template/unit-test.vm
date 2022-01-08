@@ -24,6 +24,7 @@ public class ${className}UnitTest {
     private ${className} ${instanceName};
 
     #foreach($field in $fieldList)
+    ${field.javaDoc}
     @Mock
     private ${field.className} ${field.instanceName};
     #end

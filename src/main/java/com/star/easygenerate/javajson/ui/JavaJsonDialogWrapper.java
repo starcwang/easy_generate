@@ -25,8 +25,9 @@ public class JavaJsonDialogWrapper extends DialogWrapper {
         myComponent = component;
 
         setTitle(StringUtil.notNullize(title));
-
-        setModal(false);
+        setModal(true);
+        setSize(1280, 720);
+        setAutoAdjustable(false);
         init();
     }
 

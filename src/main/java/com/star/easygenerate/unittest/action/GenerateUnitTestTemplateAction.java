@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
@@ -25,6 +26,7 @@ import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiJavaFile;
@@ -143,6 +145,7 @@ public class GenerateUnitTestTemplateAction extends AnAction {
                 templateField.setPackageName(field.getType().getCanonicalText());
                 templateField.setInstanceName(field.getName());
                 templateField.setClassName(field.getType().getPresentableText());
+                templateField.setJavaDoc(Optional.ofNullable(field.getDocComment()).map(PsiElement::getText).orElse(""));
                 fields.add(templateField);
             }
         }

@@ -12,6 +12,16 @@ public class TemplateField {
     private String instanceName;
     /** 类名 */
     private String className;
+    /** java文档 */
+    private String javaDoc;
+
+    public String getJavaDoc() {
+        return javaDoc;
+    }
+
+    public void setJavaDoc(String javaDoc) {
+        this.javaDoc = javaDoc;
+    }
 
     public String getPackageName() {
         return packageName;

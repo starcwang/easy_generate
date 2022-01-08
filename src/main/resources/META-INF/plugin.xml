@@ -20,30 +20,13 @@
 
       <a href="https://github.com/starcwang/easy_generate">easy_generate source code and document</a><br>
       <img src="https://raw.githubusercontent.com/starcwang/easy_generate/main/doc/1.gif" /><br>
-      <h3>v3.0.0 new feature</h3>
-      <ul>
-          <li>convert java class to and from json</li>
-      </ul>
-      <h3>v2.0.0 new feature</h3>
-      <ul>
-          <li>add setter generator</li>
-          <li>add camel case converter</li>
-      </ul>
-      <h3>v1.2.1 fix bugs</h3>
-      <ul>
-          <li>fix some bugs</li>
-      </ul>
-      <h3>v1.10 create unit test template</h3>
-      <ul>
-          <li>support generate unit test template</li>
-      </ul>
-      <h3>v1.01 first version</h3>
-      <ul>
-          <li>support generate constant for field</li>
-      </ul>
     ]]></description>
 
     <change-notes><![CDATA[
+      <h3>v3.0.1 fix bugs</h3>
+      <ul>
+          <li>fix some bugs</li>
+      </ul>
       <h3>v3.0.0 new feature</h3>
       <ul>
           <li>convert java class to and from json</li>

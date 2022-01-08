@@ -14,16 +14,16 @@ public class ${data.className} extend ArrayList<${data.arrayType}> {
 public class ${data.className} {
 #end
 
-    #foreach(${field} in ${data.fieldSet})
+#foreach(${field} in ${data.fieldSet})
     private ${field.type} ${field.name};
-    #end
+#end
 
 
-    #foreach(${innerBean} in ${data.innerBeanSet})
+#foreach(${innerBean} in ${data.innerBeanSet})
     public static class ${innerBean.className} {
-        #foreach(${field} in ${innerBean.fieldSet})
+#foreach(${field} in ${innerBean.fieldSet})
         private ${field.type} ${field.name};
-        #end
+#end
     }
-    #end
+#end
 }
